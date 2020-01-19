@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { graphql } from 'gatsby'
 
 import SEO from '~/components/seo'
@@ -10,33 +10,51 @@ import {
   GridLeft,
   GridRight,
 } from '~/utils/styles'
-import {
-  ProductTitle,
-  ProductDescription
-} from './styles'
+import { ProductTitle, ProductDescription } from './styles'
 
 const ProductPage = ({ data }) => {
   const product = data.shopifyProduct
+
+  const [pageCurrVariant, setPageCurrVariant] = useState('cbn-cuts-style-1')
+
+  const pageCurrVariantData = product.variants.find(
+    variant => variant.sku === pageCurrVariant
+  )
+  console.log('pageCurrVariantData: ', pageCurrVariantData)
+
   return (
     <>
       <SEO title={product.title} description={product.description} />
       <Container>
         <TwoColumnGrid>
           <GridLeft>
-            {product.images.map(image => (
+            {product.productType === 'Cuts' ? (
               <Img
-                fluid={image.localFile.childImageSharp.fluid}
-                key={image.id}
-                alt={product.title}
+                fluid={
+                  pageCurrVariantData.image.localFile.childImageSharp.fluid
+                }
+                key={pageCurrVariantData.image.id}
+                alt={pageCurrVariant.title}
               />
-            ))}
+            ) : (
+              product.images.map(image => (
+                <Img
+                  fluid={image.localFile.childImageSharp.fluid}
+                  key={image.id}
+                  alt={product.title}
+                />
+              ))
+            )}
           </GridLeft>
           <GridRight>
             <ProductTitle>{product.title}</ProductTitle>
             <ProductDescription
               dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
             />
-            <ProductForm product={product} />
+            <ProductForm
+              setPageCurrVariant={setPageCurrVariant}
+              product={product}
+            />
           </GridRight>
         </TwoColumnGrid>
       </Container>
@@ -62,6 +80,17 @@ export const query = graphql`
       variants {
         id
         title
+        sku
+        image {
+          id
+          localFile {
+            childImageSharp {
+              fluid(maxWidth: 910) {
+                ...GatsbyImageSharpFluid_withWebp_tracedSVG
+              }
+            }
+          }
+        }
         price
         availableForSale
         shopifyId

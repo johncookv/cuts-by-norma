@@ -5,14 +5,16 @@ import PropTypes from 'prop-types'
 
 import StoreContext from '~/context/StoreContext'
 
-const ProductForm = ({ product }) => {
+const ProductForm = ({ product, setPageCurrVariant }) => {
   const {
     options,
     variants,
-    variants: [initialVariant],
     priceRange: { minVariantPrice },
   } = product
-  const [variant, setVariant] = useState({ ...initialVariant })
+  const firstAvailableVariant = variants.find(
+    variant => variant.availableForSale === true
+  )
+  const [variant, setVariant] = useState({ ...firstAvailableVariant })
   const [quantity, setQuantity] = useState(1)
   const {
     addVariantToCart,
@@ -58,6 +60,8 @@ const ProductForm = ({ product }) => {
     )
 
     setVariant({ ...selectedVariant })
+    // set variant for page (needed to update image)
+    setPageCurrVariant(selectedVariant.sku)
   }
 
   const handleAddToCart = () => {
