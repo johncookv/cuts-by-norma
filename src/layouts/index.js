@@ -13,9 +13,22 @@ const Wrapper = styled.div`
   max-width: 960px;
   padding: 0px 1rem 1.45rem;
 `
+
+const FooterWrapper = styled.div`
+  background: rebeccapurple;
+`
+
+const FooterContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin: 0 auto;
+  max-width: 960px;
+`
+
 const Footer = styled.footer`
   padding: 1rem;
-  background-color: rebeccapurple;
   color: white;
   display: flex;
 `
@@ -45,9 +58,13 @@ const Layout = ({ children }) => {
           <>
             <Navigation logoFluid={data.file.childImageSharp.fluid} />
             <Wrapper>{children}</Wrapper>
-            <Footer>
-              <div>© {new Date().getFullYear()}, Cuts by Norma</div>
-            </Footer>
+            <FooterWrapper>
+              <FooterContainer>
+                <Footer>
+                  <div>© {new Date().getFullYear()}, Cuts by Norma</div>
+                </Footer>
+              </FooterContainer>
+            </FooterWrapper>
           </>
         )}
       />
