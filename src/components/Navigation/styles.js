@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { Link } from 'gatsby'
+import Image from 'gatsby-image'
 
 import { breakpoints } from '../../utils/styles'
 
@@ -11,10 +12,14 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  padding: 1.45rem;
+  align-items: center;
+  padding: 1rem;
   margin: 0 auto;
   max-width: 960px;
+`
+
+export const StyledImage = styled(Image)`
+  width: 100px;
 `
 
 export const MenuLink = styled(Link)`
@@ -23,8 +28,8 @@ export const MenuLink = styled(Link)`
   font-size: 2rem;
   font-weight: bold;
 
-  @media (max-width: ${breakpoints.s}px){
-    font-size: 1.4rem
+  @media (max-width: ${breakpoints.s}px) {
+    font-size: 1.4rem;
   }
 `
 
@@ -38,10 +43,3 @@ export const CartCounter = styled.span`
   margin: -10px;
   z-index: 20;
 `
-
-    
-     
-        
-          
-            
-              
