@@ -106,7 +106,7 @@ const ProductForm = ({ product, setPageCurrVariant }) => {
           <select
             name={name}
             key={id}
-            onChange={event => handleOptionChange(index, event)}
+            onBlur={event => handleOptionChange(index, event)}
           >
             {values.map(value => (
               <option
